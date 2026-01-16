@@ -1,0 +1,240 @@
+/* css/write_detail.css */
+
+/* --- 공통 타이틀 --- */
+.page-header {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.page-header h2 {
+  font-size: 1.8rem;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+.page-header p {
+  color: var(--text-sub);
+}
+
+/* --- 1. 글쓰기 폼 스타일 --- */
+.write-form {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #334155;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.form-textarea {
+  height: 300px;
+  resize: vertical;
+}
+
+/* 태그 선택 라디오 버튼 디자인 */
+.tag-selector {
+  display: flex;
+  gap: 10px;
+}
+.tag-selector input[type="radio"] {
+  display: none; /* 실제 라디오 버튼 숨김 */
+}
+.tag-option {
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #64748b;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+/* 체크되었을 때 스타일 */
+.tag-selector input:checked + .tag-option {
+  background: white;
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 버튼들 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 2rem;
+}
+.btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-cancel {
+  background: #f1f5f9;
+  color: #64748b;
+}
+.btn-submit {
+  background: var(--primary-blue);
+  color: white;
+}
+.btn-submit:hover {
+  background: var(--primary-hover);
+}
+
+/* --- 2. 상세 페이지 스타일 --- */
+.detail-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+.detail-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+.detail-title {
+  font-size: 1.8rem;
+  margin: 10px 0;
+  color: #1e293b;
+}
+.detail-meta {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+.detail-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #334155;
+  min-height: 200px;
+}
+
+/* 좋아요 버튼 */
+.detail-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  padding: 12px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+  color: #64748b;
+}
+.like-btn:hover {
+  border-color: #fda4af;
+  background: #fff1f2;
+  color: #e11d48;
+}
+/* 좋아요 활성화(클릭) 상태 */
+.like-btn.active {
+  background: #e11d48;
+  border-color: #e11d48;
+  color: white;
+}
+.like-btn.active .heart-icon {
+  fill: white; /* 아이콘 채우기 */
+}
+
+/* --- 3. 댓글 섹션 --- */
+.comment-section {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 2rem;
+  border-radius: 16px;
+}
+.comment-header {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #334155;
+}
+.comment-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.comment-form textarea {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  resize: none;
+  height: 80px;
+}
+.btn-comment {
+  width: 80px;
+  background: #334155;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.comment-item {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 0;
+}
+.comment-author {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.comment-text {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.comment-date {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.list-btn-area {
+  text-align: center;
+  margin-top: 3rem;
+}
+.btn-list {
+  background: #94a3b8;
+  color: white;
+}

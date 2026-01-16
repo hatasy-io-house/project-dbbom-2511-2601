@@ -1,0 +1,130 @@
+/* 기본 스타일 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Malgun Gothic", "Dotum", sans-serif;
+  font-size: 13px;
+  background-color: #fff;
+  color: #333;
+}
+
+/* 상단 헤더 (청록색) */
+.header {
+  background: linear-gradient(
+    to right,
+    #2563eb,
+    #4f46e5
+  ); /* 이미지와 유사한 청록색 */
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+.header-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+/* 컨텐츠 영역 */
+.container {
+  padding: 15px;
+}
+
+/* 각 줄 (Row) 스타일 */
+.row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dotted #ccc; /* 점선 구분선 */
+  padding: 8px 0;
+}
+
+/* 라벨 (제목, 작성자 등) */
+.label {
+  width: 100px;
+  font-weight: bold;
+  color: #333;
+  padding-left: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.label::before {
+  content: "•";
+  color: #cc0000; /* 붉은색 점 */
+  margin-right: 5px;
+}
+
+/* 값 (내용) */
+.value {
+  flex-grow: 1;
+}
+
+/* 라디오 버튼 그룹 */
+.radio-group label {
+  margin-right: 15px;
+  cursor: pointer;
+}
+.radio-group input {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* 텍스트 입력창 */
+.textarea-box {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  resize: none; /* 크기 조절 방지 */
+  font-family: inherit;
+}
+
+/* 하단 안내 문구 박스 */
+.info-box {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-top: 10px;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.5;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* 하단 버튼 영역 */
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #fff;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.btn-submit {
+  border: 1px solid #333;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.btn-close {
+  background-color: #fff;
+}
+
+.btn:hover {
+  background-color: #f9f9f9;
+}

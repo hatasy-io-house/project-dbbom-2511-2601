@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.CommentMapper">
+  <!-- ResultMap -->
+  <resultMap id="commentMap" type="com.pcwk.ehr.comment.domain.CommentVO">
+    <id column="comment_sid" property="commentSid"/>
+    <result column="comment_content" property="commentContent"/>
+    <result column="comment_reccount" property="commentReccount"/>
+    <result column="comment_uploaddate" property="commentUpdateDate"/>
+    <result column="diary_sid" property="diarySid"/>
+    <result column="famous_sid" property="famousSid"/>
+    <result column="reg_id" property="regId"/>
+    <result column="parent_sid" property="parentSid"/>
+    <result column="nickname"  property="nickname"/>
+  </resultMap>
+  <select id="getListByFamousSid" parameterType="int" resultMap="commentMap">
+    SELECT
+        t1.comment_sid,
+        t1.comment_content,
+        t1.comment_reccount,
+        t1.comment_uploaddate,
+        t1.famous_sid,
+        t1.reg_id,
+        t1.parent_sid,
+        t2.nickname AS nickname,  /* JOIN을 통해 닉네임 추가 */
+        LEVEL as "level"           /* 계층형 깊이 추가 */
+    FROM comments t1
+    LEFT JOIN users t2 ON t1.reg_id = t2.user_id
+    WHERE t1.famous_sid = #{famousSid}
+    START WITH t1.parent_sid IS NULL OR t1.parent_sid = 0
+    CONNECT BY PRIOR t1.comment_sid = t1.parent_sid
+    ORDER SIBLINGS BY t1.comment_sid ASC
+</select>
+  <select id="getListByDiarySid" parameterType="int" resultMap="commentMap">
+    SELECT
+      t1.comment_sid,
+      t1.comment_content,
+      t1.comment_reccount,
+      t1.comment_uploaddate,
+      t1.diary_sid,
+      t1.famous_sid,
+      t1.reg_id,
+      t1.parent_sid,
+      t2.nickname AS nickname  /* 추가 */
+    FROM comments t1
+    LEFT JOIN users t2 ON t1.reg_id = t2.user_id /* 추가 */
+    WHERE t1.diary_sid = #{diarySid}
+    START WITH t1.parent_sid IS NULL
+    CONNECT BY PRIOR t1.comment_sid = t1.parent_sid
+    ORDER SIBLINGS BY t1.comment_uploaddate ASC
+</select>
+  <!-- 댓글 등록 (시퀀스 사용) -->
+  <insert id="doSave" parameterType="com.pcwk.ehr.comment.domain.CommentVO">
+    <selectKey keyProperty="commentSid" order="BEFORE" resultType="int">
+      SELECT COMMENT_SEQ.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO COMMENTS (
+      COMMENT_SID,
+      COMMENT_CONTENT,
+      COMMENT_RECCOUNT,
+      COMMENT_UPLOADDATE,
+      DIARY_SID,
+      FAMOUS_SID,
+      REG_ID,
+      PARENT_SID ) VALUES (
+      #{commentSid},
+      #{commentContent},
+      #{commentReccount},
+      SYSDATE,
+      <choose>
+        <when test="diarySid != null">
+          #{diarySid, jdbcType=INTEGER}, NULL
+        </when>
+        <when test="famousSid != null">
+          NULL, #{famousSid, jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          NULL, NULL
+        </otherwise>
+      </choose>,
+      #{regId},
+      #{parentSid, jdbcType=INTEGER} )
+  </insert>
+  <!-- 여러 건 댓글 대량 등록 (saveAll) -->
+  <insert id="saveAll">
+    INSERT INTO COMMENTS (
+      COMMENT_SID,
+      COMMENT_CONTENT,
+      COMMENT_RECCOUNT,
+      COMMENT_UPLOADDATE,
+      DIARY_SID,
+      FAMOUS_SID,
+      REG_ID,
+      PARENT_SID
+    )
+    SELECT
+      COMMENT_SEQ.NEXTVAL AS comment_sid,
+      '댓글내용' || ROWNUM AS comment_content,
+      0 AS comment_reccount,
+      SYSDATE AS comment_uploaddate,
+      D.DIARY_SID AS diary_sid,
+      NULL AS famous_sid,
+      'user01' AS reg_id,
+      NULL AS parent_sid
+    FROM DIARY D
+    WHERE ROWNUM <![CDATA[ <= ]]> 1002
+  </insert>
+  <!-- 댓글 단건 조회 -->
+  <select id="doSelectOne" parameterType="int" resultMap="commentMap">
+    SELECT
+      comment_sid,
+      comment_content,
+      comment_reccount,
+      comment_uploaddate,
+      diary_sid,
+      famous_sid,
+      reg_id,
+      parent_sid
+    FROM comments
+    WHERE comment_sid = #{commentSid}
+  </select>
+  <!-- 댓글 전체 삭제 -->
+  <delete id="deleteAll">
+    DELETE FROM comments
+  </delete>
+  <!-- 댓글 삭제 -->
+  <delete id="doDelete" parameterType="int">
+    DELETE FROM comments
+    WHERE comment_sid = #{commentSid}
+  </delete>
+  <!-- 댓글 개수 조회 -->
+  <select id="getCount" resultType="int">
+    SELECT COUNT(*) FROM comments
+  </select>
+  <!-- 댓글 목록(페이징) -->
+  <select id="doRetrieve" parameterType="com.pcwk.ehr.cmn.DTO" resultMap="commentMap">
+    SELECT A.*, B.*
+    FROM (
+            SELECT tt1.rnum AS no,
+              tt1.comment_sid,
+              tt1.comment_content,
+              tt1.comment_reccount,
+              tt1.comment_uploaddate,
+              tt1.diary_sid,
+              tt1.famous_sid,
+              tt1.reg_id,
+              tt1.parent_sid
+      FROM (
+        SELECT ROWNUM AS rnum, t1.*
+        FROM (
+          SELECT *
+          FROM comments
+          WHERE 1=1
+          ORDER BY comment_sid DESC
+        ) t1
+        WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} * (#{pageNo} - 1) + #{pageSize})
+      ) tt1
+      WHERE tt1.rnum <![CDATA[ >= ]]> (#{pageSize} * (#{pageNo} - 1) + 1)
+    ) A
+    CROSS JOIN (
+      SELECT COUNT(*) total_cnt
+      FROM comments
+      WHERE 1=1
+    ) B
+  </select>
+</mapper>

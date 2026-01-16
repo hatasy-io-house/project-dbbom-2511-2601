@@ -1,0 +1,485 @@
+/* famous_diary_board.css */
+
+/* 1. 기본 레이아웃 및 섹션 설정 */
+.board-best-section {
+  margin-bottom: 3rem;
+}
+
+.board-latest-section {
+  margin-bottom: 4rem;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: #f1f5f9;
+  margin: 3rem 0;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.section-title h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* 2. 게시글 그리드 시스템 (가로 3개 고정) */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  width: 100%;
+}
+
+/* 3. 카드 공통 스타일 */
+.post-card {
+  display: flex !important; /* JS 복사 시 유지를 위해 강제 설정 */
+  flex-direction: column;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  height: 100%;
+  min-height: 220px;
+  position: relative;
+  position: relative; /* 배지 배치를 위해 필수 */
+  padding-top: 40px !important; /* 배지가 들어갈 윗공간 확보 */
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* 베스트 3 전용 강조 스타일 */
+.post-card.best-card {
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #fefce8, #fff7ed) border-box;
+  border: 2px solid transparent;
+}
+
+.rank-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #f59e0b;
+  margin-bottom: 8px;
+}
+
+/* 4. 감정 아이콘 태그 (긍정/성찰) */
+.sentiment-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
+.tag-positive {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.tag-negative {
+  background-color: #f3e8ff;
+  color: #0b2ce9;
+}
+
+.sentiment-tag i {
+  width: 14px;
+  height: 14px;
+}
+
+/* 5. 글 내용 스타일 */
+.post-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.post-preview {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1; /* 내용이 짧아도 메타 영역이 하단 고정되도록 함 */
+}
+
+/* 6. 메타 정보 (작성자, 좋아요) */
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+}
+
+.likes-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #e11d48;
+  font-weight: 700;
+}
+
+.likes-info i {
+  width: 14px;
+  height: 14px;
+  fill: #e11d48;
+}
+
+/* 7. 페이징 버튼 */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.page-btn {
+  padding: 8px 16px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.page-btn:hover {
+  background: #f8fafc;
+}
+
+.page-btn.active {
+  background: #3b82f6; /* primary-blue */
+  color: white;
+  border-color: #3b82f6;
+}
+  
+  .section-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .section-title .sub-title {
+    margin-left: 0;
+  }
+
+/* 그리드 레이아웃: 3열 고정 */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* 감정 아이콘 태그 스타일 */
+.sentiment-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
+/* 긍정 (해 아이콘) */
+.tag-positive {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+/* 성찰 (달 아이콘) */
+.tag-negative {
+  background-color: #f3e8ff;
+  color: #3322ce;
+}
+
+/* 기본 상태: 회색 하트 */
+.likes-trigger i {
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+/* 클릭 후(좋아요 성공) 상태: 빨간색 하트 */
+.likes-trigger i.liked svg {
+    color: #ef4444 !important; /* 빨간색 */
+    fill: #ef4444; /* 하트 내부 채우기 */
+}
+
+.sentiment-tag i {
+  width: 14px;
+  height: 14px;
+}
+
+/* 페이징 버튼 컨테이너 */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.page-btn {
+  padding: 8px 16px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.page-btn.active {
+  background: var(--primary-blue, #3b82f6);
+  color: white;
+  border-color: var(--primary-blue, #3b82f6);
+}
+
+/* 추천수 아이콘 스타일 */
+.likes-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #e11d48;
+  font-weight: bold;
+}
+.likes-info i { fill: #e11d48; }
+
+/* 출처 스타일 */
+.post-author {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: right;
+  margin-bottom: 1.2rem;
+  font-style: italic;
+}
+
+/* 좋아요 버튼 효과 */
+.likes-trigger {
+  transition: transform 0.1s ease;
+}
+
+.likes-trigger:active {
+  transform: scale(1.2); /* 클릭 시 살짝 커짐 */
+}
+
+.likes-trigger.liked .heart-icon {
+  fill: #e11d48; /* 좋아요 누르면 하트 채워짐 */
+  color: #e11d48;
+}
+
+.likes-trigger.liked .like-count {
+  color: #e11d48;
+}
+
+/* 그리드 안정화 */
+.posts-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 25px;
+  width: 100%;
+}
+
+/* 카드 내부 구성 */
+.post-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+  position: relative; /* 배지 배치를 위해 필수 */
+  padding-top: 40px !important; /* 배지가 들어갈 윗공간 확보 */
+}
+
+/* 저자(출처) 스타일 */
+.post-author {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: right;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+/* 좋아요 버튼 스타일 */
+.likes-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #64748b;
+}
+
+.likes-trigger.liked {
+  color: #e11d48;
+}
+
+.likes-trigger.liked i {
+  fill: #e11d48;
+}
+
+.like-count {
+  font-weight: bold;
+}
+
+
+/* 1. 카드 전체 레이아웃 정돈 */
+/* 카드 기본 설정 */
+/* 1. 카드 전체 레이아웃 */
+.post-card {
+    height: 300px !important; /* 높이를 살짝 키워 여유 확보 */
+    padding: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #fff !important;
+    border-radius: 20px !important;
+    border: 1px solid #edf2f7 !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+/* 2. 저자 및 내용 영역 (중앙 정렬) */
+.post-content-main {
+    flex: 1 !important; /* 중간 공간을 꽉 채우도록 설정 */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* 수직 중앙 정렬 */
+    margin-top: 10px !important;
+}
+
+.display-author {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: #1a202c !important;
+    margin: 0 0 8px 0 !important;
+    text-align: center !important;
+}
+
+.display-content {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1 !important; /*내용이 1줄일 경우 ...*/
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 0.95rem !important;
+    color: #4a5568 !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+    margin: 0 !important;
+}
+
+/* 3. 하단 메타 정보 (가로 정렬 핵심!) */
+.post-meta {
+    display: flex !important;
+    justify-content: space-between !important; /* ID와 아이콘들을 양 끝으로 */
+    align-items: center !important;
+    border-top: 1px solid #f7fafc !important;
+    padding-top: 15px !important;
+    margin-top: 20px !important;
+}
+
+/* 아이콘 묶음 가로 정렬 */
+.meta-icons {
+    display: flex !important;
+    flex-direction: row !important; /* 가로 방향 강제 */
+    align-items: center !important;
+    gap: 12px !important; /* 아이콘 사이 간격 */
+    color: #718096 !important;
+}
+
+.views-info, .likes-trigger {
+    display: flex !important;
+    flex-direction: row !important; /* 내부 아이콘과 숫자 가로 정렬 */
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.views-info i, .likes-trigger i {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* --- 페이징 디자인 업데이트 --- */
+
+/* 페이징 전체 컨테이너 */
+.pagination-container {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    width: 100% !important;
+}
+
+/* 리스트 정렬 */
+.pagination-list {
+    display: flex !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 10px !important; /* 번호 사이 간격 */
+    align-items: center !important;
+}
+
+/* 개별 번호 및 버튼 디자인 */
+.page-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    padding: 0 12px !important;
+    border-radius: 12px !important; /* 부드러운 사각형 */
+    border: 1px solid #e2e8f0 !important;
+    background-color: white !important;
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* 현재 페이지 강조 (보라색 그라데이션) */
+.page-link.active {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* 이전/다음 글자 스타일 */
+.page-link.prev-next {
+    background-color: #f8fafc !important;
+    font-size: 0.85rem !important;
+}
+
+.page-link:hover:not(.active) {
+    border-color: #6366f1 !important;
+    color: #6366f1 !important;
+    transform: translateY(-2px) !important;
+}

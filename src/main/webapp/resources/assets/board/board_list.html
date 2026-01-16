@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+
+<link rel="stylesheet" href="/ehr/resources/assets/css/reset.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/theme-sky.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/layout.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/table.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/paging.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/button.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/form.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 헤더 -->
+    <div class="page-header">
+        <h2>게시판 목록</h2>
+        <button class="btn btn-primary" onclick="goReg()">등록</button>
+    </div>
+
+    <!-- 테이블 -->
+    <table class="board-table">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>구분</th>
+                <th>조회수</th>
+                <th>등록일</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10</td>
+                <td class="col-title" onclick="goDetail(10)">
+                    게시판 제목 테스트
+                </td>
+                <td>공지</td>
+                <td>15</td>
+                <td>2025-09-18</td>
+                <td>admin</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징 -->
+    <div class="paging">
+        <a href="#">«</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">»</a>
+    </div>
+
+</div>
+
+<script>
+function goReg() {
+    location.href = "/ehr/board/board_reg.html";
+}
+function goDetail(seq) {
+    location.href = "/ehr/board/board_detail.html?seq=" + seq;
+}
+</script>
+
+</body>
+</html>

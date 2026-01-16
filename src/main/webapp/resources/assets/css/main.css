@@ -1,0 +1,68 @@
+/* css/home.css */
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.hero-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+.hero-section p {
+  color: var(--text-sub);
+}
+
+/* 다이어리 메뉴 카드 */
+.diary-menu-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 4rem;
+}
+.diary-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.diary-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 색상별 스타일 */
+.diary-card.quote .icon-circle {
+  background-color: var(--color-quote);
+  color: #7e22ce;
+}
+.diary-card.gratitude .icon-circle {
+  background-color: var(--color-gratitude);
+  color: #807a48;
+}
+.diary-card.luck .icon-circle {
+  background-color: var(--color-luck);
+  color: #158a24;
+}
+.diary-card.reflection .icon-circle {
+  background-color: var(--color-reflection);
+  color: #2d3faa;
+}
+
+@media (max-width: 768px) {
+  .diary-menu-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

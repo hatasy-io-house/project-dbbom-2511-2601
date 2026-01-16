@@ -1,0 +1,62 @@
+/* css/notice.css */
+.notice-container {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+.notice-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.notice-item:hover {
+  background-color: #fafafa;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+}
+.notice-item.important {
+  background-color: #fff1f2;
+  padding: 1.2rem 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  border-bottom: none;
+}
+.notice-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notice-badge {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.notice-date {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* 뱃지 색상 */
+.notice-badge.must {
+  background: #ef4444;
+  color: white;
+}
+.notice-badge.event {
+  background: #8b5cf6;
+  color: white;
+}
+.notice-badge.update {
+  background: #3b82f6;
+  color: white;
+}
+.notice-badge.system {
+  background: #64748b;
+  color: white;
+}

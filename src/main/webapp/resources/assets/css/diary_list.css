@@ -1,0 +1,214 @@
+/* css/board.css */
+/* 상단 인기글 영역 */
+.board-best-section {
+  margin-bottom: 3rem;
+}
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* 카드 스타일 */
+.post-card {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  background: white;
+}
+.post-card.best-card {
+  border: 2px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, #fefce8, #fff7ed) border-box;
+}
+
+/* 태그 */
+.post-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.post-tag.gratitude {
+  background: #fcfcbf;
+  color: #8d842ff3;
+}
+.post-tag.quote {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+.post-tag.luck {
+  background: #d2fec7;
+  color: #158a24;
+}
+.post-tag.reflection {
+  background: #aec7fc;
+  color: #2d3faa;
+}
+
+/* 글 내용 */
+.post-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+}
+.post-preview {
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  margin-bottom: 1.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+/* 리스트형 게시판 (테이블 대신 div 사용) */
+.board-list-header {
+  display: flex;
+  padding: 10px 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.th-title {
+  flex: 1;
+}
+.th-author,
+.th-date,
+.th-likes {
+  width: 100px;
+  text-align: center;
+}
+
+.board-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.board-row:hover {
+  transform: translateX(5px);
+  border-left: 3px solid var(--primary-blue);
+}
+.row-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+.row-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+.row-author,
+.row-date,
+.row-likes {
+  width: 80px;
+  text-align: center;
+}
+.new-badge {
+  background: #ef4444;
+  color: white;
+  font-size: 0.6rem;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.pagination-container {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    width: 100% !important;
+}
+
+/* 리스트 정렬 */
+.pagination-list {
+    display: flex !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 10px !important; /* 번호 사이 간격 */
+    align-items: center !important;
+}
+
+/* 개별 번호 및 버튼 디자인 */
+.page-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    padding: 0 12px !important;
+    border-radius: 12px !important; /* 부드러운 사각형 */
+    border: 1px solid #e2e8f0 !important;
+    background-color: white !important;
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important; 
+}
+
+/* 현재 페이지 강조 (보라색 그라데이션) */
+.page-link.active {
+    background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* 이전/다음 글자 스타일 */
+.page-link.prev-next {
+    background-color: #f8fafc !important;
+    font-size: 0.85rem !important;
+}
+
+
+@media (max-width: 768px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+  .board-list-header {
+    display: none;
+  }
+  .board-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .row-meta {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+
+}

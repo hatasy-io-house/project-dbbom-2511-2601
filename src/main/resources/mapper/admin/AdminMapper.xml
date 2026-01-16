@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.AdminMapper">
+
+    <resultMap id="reportMap" type="com.pcwk.ehr.report.domain.ReportVO">
+        <id property="reportSid" column="reportSid" />
+        <result property="reportCategory" column="reportCategory" />
+        <result property="reportContent" column="reportContent" />
+        <result property="regId" column="regId" />
+        <result property="diarySid" column="diarySid" />
+        <result property="commentSid" column="commentSid" />
+        <result property="famousSid" column="famousSid" /> 
+        <result property="diaryContent" column="diaryContent" />
+    </resultMap>
+    
+    <select id="doRetrieveReportList" parameterType="com.pcwk.ehr.cmn.DTO" resultMap="reportMap">
+        SELECT * FROM (
+            SELECT ROWNUM AS rnum, A.* FROM (
+                SELECT
+                    r.report_sid as reportSid,
+                    r.report_category as reportCategory,
+                    r.report_content as reportContent,
+                    r.reg_id as regId,
+                    r.comment_sid as commentSid,
+                    /* 중요: 명언/일기 댓글 신고 시 원문 번호를 실시간으로 매칭 */
+                    COALESCE(r.diary_sid, (SELECT c.diary_sid FROM COMMENTS c WHERE c.comment_sid = r.comment_sid)) as diarySid,
+                    COALESCE(r.famous_sid, (SELECT c.famous_sid FROM COMMENTS c WHERE c.comment_sid = r.comment_sid)) as famousSid,
+                    CASE 
+                        WHEN r.comment_sid IS NOT NULL THEN 
+                            (SELECT CAST(c.COMMENT_CONTENT AS VARCHAR2(4000)) FROM COMMENTS c WHERE c.comment_sid = r.comment_sid)
+                        WHEN r.famous_sid IS NOT NULL THEN
+                            (SELECT CAST(f.FAMOUS_CONTENT AS VARCHAR2(4000)) FROM famous_collection f WHERE f.famous_sid = r.famous_sid)
+                        ELSE (SELECT TO_CHAR(SUBSTR(d.diary_content, 1, 4000)) FROM diary d WHERE d.diary_sid = r.diary_sid)
+                    END as diaryContent
+                FROM report r 
+                WHERE 1=1
+                /* 검색 조건 추가 (getReportTotalCount와 일치화) */
+                <if test="searchWord != null and searchWord != ''">
+                    <choose>
+                        <when test="searchDiv == '10'"> AND r.report_content LIKE '%' || #{searchWord} || '%' </when>
+                        <when test="searchDiv == '20'"> AND r.reg_id LIKE '%' || #{searchWord} || '%' </when>
+                    </choose>
+                </if>
+                ORDER BY r.report_sid DESC
+            ) A 
+            WHERE ROWNUM <![CDATA[ <= ]]> (#{pageNo} * #{pageSize})
+        ) 
+        WHERE rnum <![CDATA[ > ]]> ((#{pageNo} - 1) * #{pageSize})
+    </select>
+    
+    <select id="getReportTotalCount" parameterType="com.pcwk.ehr.cmn.DTO" resultType="int">
+        SELECT COUNT(*) 
+        FROM report r
+        WHERE 1=1
+        <if test="searchWord != null and searchWord != ''">
+            <choose>
+                <when test="searchDiv == '10'"> AND r.report_content LIKE '%' || #{searchWord} || '%' </when>
+                <when test="searchDiv == '20'"> AND r.reg_id LIKE '%' || #{searchWord} || '%' </when>
+            </choose>
+        </if>
+    </select>
+
+    <select id="doRetrieveUserList" parameterType="com.pcwk.ehr.cmn.DTO" resultType="com.pcwk.ehr.user.domain.UserVO">
+        SELECT * FROM (
+            SELECT ROWNUM AS rnum, A.* FROM (
+                SELECT user_id as userId, nickname, admin_chk as adminChk
+                FROM users WHERE 1=1
+                <if test="searchWord != null and searchWord != ''">
+                    <choose>
+                        <when test="searchDiv == '10'"> AND user_id LIKE '%' || #{searchWord} || '%' </when>
+                        <when test="searchDiv == '20'"> AND nickname LIKE '%' || #{searchWord} || '%' </when>
+                    </choose>
+                </if>
+                ORDER BY user_id ASC
+            ) A WHERE ROWNUM <![CDATA[ <= ]]> (#{pageNo} * #{pageSize})
+        ) WHERE rnum <![CDATA[ > ]]> ((#{pageNo} - 1) * #{pageSize})
+    </select>
+
+    <select id="getUserTotalCount" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
+
+    <select id="doRetrieveDiaryList" parameterType="com.pcwk.ehr.cmn.DTO" resultType="com.pcwk.ehr.diary.domain.DiaryVO">
+        SELECT * FROM (
+            SELECT ROWNUM AS rnum, A.* FROM (
+                SELECT 
+                    diary_sid as diarySid, 
+                    reg_id as regId, 
+                    diary_title as diaryTitle, 
+                    diary_content as diaryContent,  
+                    diary_status as diaryStatus
+                FROM diary WHERE 1=1
+                <if test="searchWord != null and searchWord != ''">
+                    <choose>
+                        <when test="searchDiv == '10'"> AND diary_title LIKE '%' || #{searchWord} || '%' </when>
+                        <when test="searchDiv == '20'"> AND reg_id LIKE '%' || #{searchWord} || '%' </when>
+                    </choose>
+                </if>
+                ORDER BY diary_sid DESC
+            ) A WHERE ROWNUM <![CDATA[ <= ]]> (#{pageNo} * #{pageSize})
+        ) WHERE rnum <![CDATA[ > ]]> ((#{pageNo} - 1) * #{pageSize})
+    </select>
+
+    <select id="getDiaryTotalCount" resultType="int">
+        SELECT COUNT(*) FROM diary
+    </select>
+
+    <delete id="doDeleteUser" parameterType="com.pcwk.ehr.user.domain.UserVO">
+        DELETE FROM users WHERE user_id = #{userId}
+    </delete>
+    
+    <delete id="doDeleteReport" parameterType="com.pcwk.ehr.report.domain.ReportVO">
+        DELETE FROM report WHERE report_sid = #{reportSid}
+    </delete>
+    
+    <delete id="doDeleteDiary" parameterType="com.pcwk.ehr.diary.domain.DiaryVO">
+        DELETE FROM diary WHERE diary_sid = #{diarySid}
+    </delete>
+    
+    <delete id="doDeleteComment" parameterType="com.pcwk.ehr.report.domain.ReportVO">
+        DELETE FROM COMMENTS WHERE comment_sid = #{commentSid}
+    </delete>
+
+</mapper>

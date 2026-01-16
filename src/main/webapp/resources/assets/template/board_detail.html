@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시글 상세</title>
+
+<link rel="stylesheet" href="/ehr/resources/assets/css/board.css">
+</head>
+
+<body>
+
+<div class="board-container">
+
+    <!-- 헤더 -->
+    <div class="board-header">
+        <h2 id="title">게시판 테스트 제목</h2>
+    </div>
+
+    <!-- 게시글 정보 -->
+    <div class="board-info">
+        <div>
+            <span>구분: <strong id="div">공지</strong></span>
+            <span>작성자: <strong id="regId">admin</strong></span>
+        </div>
+        <div>
+            <span>조회수: <strong id="readCnt">15</strong></span>
+            <span>등록일: <strong id="regDt">2025-09-18</strong></span>
+        </div>
+    </div>
+
+    <!-- 내용 -->
+    <div class="board-content" id="contents">
+안녕하세요.
+게시판 상세 화면 테스트입니다.
+
+엔터와 공백이 그대로 유지됩니다.
+    </div>
+
+    <!-- 버튼 -->
+    <div class="board-btn-area">
+        <button class="btn btn-list" onclick="goList()">목록</button>
+        <button class="btn btn-primary" onclick="goEdit()">수정</button>
+        <button class="btn btn-danger" onclick="doDelete()">삭제</button>
+    </div>
+
+</div>
+
+<script>
+    function goList() {
+        location.href = "/ehr/board/board_list.html";
+    }
+
+    function goEdit() {
+        const seq = getParam("seq");
+        location.href = "/ehr/board/board_edit.html?seq=" + seq;
+    }
+
+    function doDelete() {
+        if (!confirm("정말 삭제하시겠습니까?")) return;
+        alert("삭제 처리 (AJAX 연동 예정)");
+    }
+
+    function getParam(name) {
+        const url = new URL(location.href);
+        return url.searchParams.get(name);
+    }
+</script>
+
+</body>
+</html>

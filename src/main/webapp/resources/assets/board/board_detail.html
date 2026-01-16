@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시글 상세</title>
+
+<link rel="stylesheet" href="/ehr/resources/assets/css/reset.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/theme-sky.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/layout.css">
+<link rel="stylesheet" href="/ehr/resources/assets/css/button.css">
+</head>
+
+<body> 
+
+<div class="container">
+
+    <!-- 헤더 -->
+    <div class="detail-header">
+        <h2 id="title">게시판 테스트 제목</h2>
+    </div>
+
+    <!-- 정보 -->
+    <div class="info-area">
+        <div>
+            <span>구분: <strong id="div">공지</strong></span>
+            <span>작성자: <strong id="regId">admin</strong></span>
+        </div>
+        <div>
+            <span>조회수: <strong id="readCnt">15</strong></span>
+            <span>등록일: <strong id="regDt">2025-09-18</strong></span>
+        </div>
+    </div>
+
+    <!-- 내용 -->
+    <div class="content-area">
+안녕하세요.
+게시판 상세 화면입니다.
+
+엔터와 공백이 그대로 유지됩니다.
+    </div>
+
+    <!-- 버튼 -->
+    <div class="btn-area">
+        <button class="btn btn-outline" onclick="goList()">목록</button>
+        <button class="btn btn-primary">수정</button>
+        <button class="btn btn-danger">삭제</button>
+    </div>
+
+</div>
+
+<script>
+function goList() {
+    location.href = "/ehr/board/board_list.html";
+}
+</script>
+
+</body>
+</html>

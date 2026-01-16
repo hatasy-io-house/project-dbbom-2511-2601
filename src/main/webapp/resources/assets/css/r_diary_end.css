@@ -1,0 +1,303 @@
+/* =========================================
+   1. 변수 및 리셋 (Variables & Reset)
+   ========================================= */
+:root {
+  /* 배경색: 연한 파란색 테마 */
+  --gradient-start: #eff6ff; /* blue-50 */
+  --gradient-mid: #eef2ff; /* indigo-50 */
+  --gradient-end: #faf5ff; /* purple-50 */
+
+  /* 포인트 컬러 */
+  --primary-blue: #3b82f6;
+  --primary-hover: #2563eb;
+  --accent-blue: #1837a0;
+
+  /* 텍스트 및 기타 */
+  --text-main: #1f2937;
+  --text-sub: #4b5563;
+  --border-color: #dbeafe;
+  --white-alpha: rgba(255, 255, 255, 0.8);
+
+  /* 태그 색상 */
+  --color-quote: #e9d5ff;
+  --color-gratitude: #fde68a;
+  --color-luck: #66eb71a4;
+  --color-reflection: #bae6fd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* 부드러운 파스텔톤 파란색 그라데이션 배경 */
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start),
+    var(--gradient-mid),
+    var(--gradient-end)
+  );
+  min-height: 100vh;
+  color: var(--text-main);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================================
+   2. 레이아웃 유틸리티 (Layout Utilities)
+   ========================================= */
+.container {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main {
+  padding: 2rem 1rem;
+  flex: 1; /* 콘텐츠 부족시에도 푸터를 하단으로 밀어냄 */
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #2146705e;
+  margin: 20px 0;
+}
+
+/* =========================================
+   3. 헤더 & 푸터 (Header & Footer)
+   ========================================= */
+header {
+  background-color: var(--white-alpha);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.header-inner {
+  padding: 1rem 0;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--primary-blue), #4f46e5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--primary-hover), #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.auth-item {
+  color: var(--text-sub);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.auth-item:hover {
+  color: var(--primary-blue);
+}
+
+.divider {
+  color: #cbd5e1;
+}
+
+footer {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid var(--border-color);
+  margin-top: 4rem;
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-sub);
+}
+
+/* =========================================
+   4. 메뉴바 & 드롭다운 (Navigation)
+   ========================================= */
+.tab-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 0.4rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  gap: 0.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.6rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+.tab-btn.active,
+.tab-btn[aria-selected="true"] {
+  background-color: var(--primary-blue) !important;
+  color: white !important;
+  box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+}
+
+.menu-label {
+  font-weight: 800;
+  color: var(--text-sub);
+  font-size: 0.9rem;
+  cursor: default;
+  text-align: center;
+}
+
+/* 드롭다운 */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  padding: 0.5rem;
+  z-index: 999;
+}
+
+.dropdown-container:hover .dropdown-content {
+  display: block;
+  animation: smoothFadeUp 0.3s ease-out forwards;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f8fafc;
+  color: var(--primary-blue);
+}
+
+@keyframes smoothFadeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* =========================================
+   5. 카드 스타일 (Cards & Content)
+   ========================================= */
+.card {
+  background-color: var(--white-alpha);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.p_font {
+  font-weight: bold;
+}
+
+#quoteArea {
+  word-break: keep-all;
+  white-space: normal;
+  line-height: 1.7;
+}
+
+/* 모바일 대응 */
+@media (max-width: 640px) {
+  .tab-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .header-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

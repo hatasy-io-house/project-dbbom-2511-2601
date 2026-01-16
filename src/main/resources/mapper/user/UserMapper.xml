@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcwk.ehr.mapper.UserMapper">
+
+  <!-- 조회 결과를 UserVO에 정확히 매핑 -->
+  <resultMap type="UserVO" id="userMap">
+    <id     column="user_id"          property="userId"/>
+    <result column="user_name"        property="userName"/>
+    <result column="user_pw"          property="userPw"/>
+    <result column="user_tel"         property="userTel"/>
+    <result column="user_email"       property="userEmail"/>
+    <result column="nickname"         property="nickname"/>
+    <result column="user_intro"       property="userIntro"/>
+    <result column="last_rec_time"    property="lastRecTime"/>
+    <result column="last_report_time" property="lastReportTime"/>
+    <result column="admin_chk"        property="adminChk"/>
+  </resultMap>
+
+    <select id="doCheckNickname" parameterType="UserVO" resultMap="userMap">
+    SELECT * FROM users 
+    WHERE nickname = #{nickname}
+  </select>
+
+	<select id="doCheckPassword" parameterType="UserVO"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM users
+		WHERE user_id = #{userId}
+		AND user_pw = #{userPw}
+	</select>
+
+	<update id="doChangePassword" parameterType="UserVO">
+		UPDATE users
+		SET user_pw = #{userPw}
+		WHERE user_id = #{userId}
+	</update>
+
+	<update id="doUpdatePw" parameterType="UserVO">
+		UPDATE users
+		SET user_pw = #{userPw}
+		WHERE user_id = #{userId}
+	</update>
+
+	<select id="doCheckUserForPw" parameterType="UserVO"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM users
+		WHERE user_id = #{userId}
+		AND user_name = #{userName}
+		AND user_email = #{userEmail}
+	</select>
+
+	<select id="doFindId" parameterType="UserVO" resultMap="userMap">
+		SELECT
+		user_id,
+		user_name,
+		user_email
+		FROM users
+		WHERE user_name = #{userName}
+		AND user_email = #{userEmail}
+	</select>
+
+  <!-- 등록 -->
+  <insert id="doSave" parameterType="UserVO">
+    INSERT INTO users (
+        user_id,
+        user_name,
+        user_pw,
+        user_tel,
+        user_email,
+        nickname,
+        user_intro,
+        last_rec_time,
+        last_report_time,
+        admin_chk
+    ) VALUES (
+        #{userId},
+        #{userName},
+        #{userPw},
+        #{userTel},
+        #{userEmail},
+        #{nickname},
+        #{userIntro},
+        SYSDATE,
+        SYSDATE,     
+        #{adminChk}
+    )
+  </insert>
+
+  <!-- 단건 조회 (PK: user_id) -->
+  <select id="doSelectOne" parameterType="UserVO" resultMap="userMap">
+    SELECT
+        user_id,
+        user_name,
+        user_pw,
+        user_tel,
+        user_email,
+        nickname,
+        user_intro,
+        last_rec_time,
+        last_report_time,
+        admin_chk
+    FROM users
+    WHERE user_id = #{userId}
+  </select>
+
+  <!-- 전체 조회 -->
+  <select id="getAll" resultMap="userMap">
+    SELECT
+        user_id,
+        user_name,
+        user_pw,
+        user_tel,
+        user_email,
+        nickname,
+        user_intro,
+        last_rec_time,
+        last_report_time,
+        admin_chk
+    FROM users
+    ORDER BY user_id ASC
+  </select>
+
+  <!-- 단일 조건 검색 조회 (doRetrieve)
+       searchDiv 예시:
+         10: ID(user_id)
+         20: 이름(user_name)
+         30: 이메일(user_email)
+         40: 닉네임(nickname)
+       searchWord: 검색어
+   -->
+  <select id="doRetrieve" parameterType="com.pcwk.ehr.cmn.DTO" resultMap="userMap">
+    SELECT
+        user_id,
+        user_name,
+        user_pw,
+        user_tel,
+        user_email,
+        nickname,
+        user_intro,
+        last_rec_time,
+        last_report_time,
+        admin_chk
+    FROM users
+    <where>
+      <if test="searchWord != null and searchWord != ''">
+        <choose>
+          <when test="searchDiv == '10'">
+            AND user_id LIKE '%' || #{searchWord} || '%'
+          </when>
+          <when test="searchDiv == '20'">
+            AND user_name LIKE '%' || #{searchWord} || '%'
+          </when>
+          <when test="searchDiv == '30'">
+            AND user_email LIKE '%' || #{searchWord} || '%'
+          </when>
+          <when test="searchDiv == '40'">
+            AND nickname LIKE '%' || #{searchWord} || '%'
+          </when>
+          <otherwise>
+            <!-- searchDiv가 비정상일 경우: 전체검색(원하면 제거 가능) -->
+            AND (
+                 user_id    LIKE '%' || #{searchWord} || '%'
+              OR user_name  LIKE '%' || #{searchWord} || '%'
+              OR user_email LIKE '%' || #{searchWord} || '%'
+              OR nickname   LIKE '%' || #{searchWord} || '%'
+            )
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+    ORDER BY user_id ASC
+  </select>
+
+<update id="doUpdate" parameterType="UserVO">
+    UPDATE users
+    SET user_name  = #{userName, jdbcType=VARCHAR},
+        <if test="userPw != null">
+            user_pw = #{userPw, jdbcType=VARCHAR},
+        </if>
+        user_tel   = #{userTel,  jdbcType=VARCHAR},
+        user_email = #{userEmail,jdbcType=VARCHAR},
+        nickname   = #{nickname, jdbcType=VARCHAR},
+        user_intro = #{userIntro,jdbcType=VARCHAR},
+        admin_chk  = #{adminChk, jdbcType=CHAR}
+    WHERE user_id  = #{userId,   jdbcType=VARCHAR}
+</update>
+
+  <!-- 삭제 -->
+  <delete id="doDelete" parameterType="UserVO">
+    DELETE FROM users
+    WHERE user_id = #{userId}
+  </delete>
+
+  <delete id="deleteAll">
+    DELETE FROM users
+  </delete>
+
+  <!-- 건수 -->
+  <select id="getCount" resultType="int">
+    SELECT COUNT(*) FROM users
+  </select>
+
+</mapper>

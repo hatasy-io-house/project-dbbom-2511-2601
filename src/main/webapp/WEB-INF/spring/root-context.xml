@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<!-- Mapper Interface 읽기 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.pcwk.ehr.mapper"></property>
+	</bean>
+
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+
+	<!-- mybatis환경 설정 -->
+	<bean id="sqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!--mybatis-config.xml -->
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml"></property>
+		<!-- mapper:sql -->
+		<property name="mapperLocations"
+			value="classpath:mapper/**/*.xml"></property>
+	</bean>
+
+
+	<!-- 트랜잭션 어노테이션 활성화 : @Transactional -->
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="dataSourceTransactionManager" />
+
+	<!-- 트랜잭션 Advice : 트랜잭션 규칙 정책, 어떤 메서드에 어떤 트랜잭션을 적용할 것인가 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="dataSourceTransactionManager">
+		<tx:attributes>
+			<tx:method name="do*" propagation="REQUIRED"
+				read-only="false" />
+			<tx:method name="up*" propagation="REQUIRED"
+				isolation="READ_COMMITTED" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.pcwk.ehr..service.*Impl.up*(..))"
+			id="txPointcut" />
+		<!-- advice + pointcut -->
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="txPointcut" />
+	</aop:config>
+
+
+	<bean id="dataSourceTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+
+	<!-- Naver SMTP -->
+	<bean id="mailSenderImpl"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="465" />
+		<property name="username" value="msk924616@naver.com" />
+		<property name="password" value="MJVT5Y36ZGHF" />
+		<property name="defaultEncoding" value="utf-8" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+				<prop key="mail.smtp.ssl.enable">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- Connection Pool -->
+	<!-- root-context.xml (완성본 핵심 수정: dataSource) -->
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+
+		<!-- ✅ 원격 오라클 접속 -->
+		<!-- 보통 서비스명 방식: //host:port/serviceName -->
+		<!-- 대표님 DB가 XE일 가능성이 높아 아래처럼 우선 적용 권장 -->
+		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@218.144.130.138:1522/xe" 
+			/> -->
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@192.168.100.30:1522/xe" />
+
+		<property name="username" value="dbbom" />
+		<property name="password" value="1216" />
+
+		<!-- Optional settings -->
+		<property name="maximumPoolSize" value="10" />
+		<property name="minimumIdle" value="5" />
+		<property name="connectionTimeout" value="30000" />
+		<property name="idleTimeout" value="600000" />
+		<property name="maxLifetime" value="1800000" />
+
+		<!-- maximumPoolSize : 풀에 유지할 최대 연결 수 minimumIdle : 유휴상태로 유지할수 있는 최대 연결 
+			수 connectionTimeout: 연결 시도 시 타임아웃 설정(밀리 초) idleTimeout : 유휴 연결이 풀에서 제거되기 
+			전 대기 시간(밀리 초) maxLifetime : 연결이 풀에서 제거되기 전 최대 생존 시간 입니다.(밀리 초) -->
+	</bean>
+
+
+
+</beans>
+

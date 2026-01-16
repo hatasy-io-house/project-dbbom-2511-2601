@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.TimeMapper">
+
+  <select id="doSelectOne" 
+   parameterType="com.pcwk.ehr.time.domain.TimeMapperVO"
+   resultType="com.pcwk.ehr.time.domain.TimeMapperVO">
+		  SELECT #{userId}   || '수요일' as userId,
+		         #{password} || '수요일' as password,
+		         TO_CHAR(SYSDATE,'yyyy/mm/dd') as regDt
+		  FROM dual
+  
+  </select>
+
+
+</mapper>

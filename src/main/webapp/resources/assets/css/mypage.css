@@ -1,0 +1,624 @@
+.mypage-box {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+}
+.mypage-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+  color: #CBD5E1;
+}
+/* 마이페이지 콘텐츠 영역 스타일 */
+.mypage-content {
+  width: 100%;
+  padding: 20px;
+  background-color: transparent; /* 배경색은 common이나 부모에서 상속 */
+}
+/* 1. 프로필 섹션 */
+.profile-section {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 25px;
+}
+.profile-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #E0E0E0;
+  margin-right: 25px;
+  object-fit: cover;
+}
+.profile-info {
+  flex-grow: 1;
+}
+.profile-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.badge {
+  font-size: 12px;
+  background-color: #FFEBA4; /* 노랑 배지 */
+  color: #555;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: normal;
+}
+.profile-email {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.profile-bio {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.edit-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  color: #555;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.edit-btn:hover {
+  background-color: #F9F9F9;
+  border-color: #ccc;
+}
+.edit-btn i {
+  width: 14px;
+  height: 14px;
+} /* Lucide 아이콘 크기 조정 */
+/* 2. 통계 카드 섹션 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.stat-card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.stat-icon i {
+  width: 20px;
+  height: 20px;
+}
+/* 색상 테마 */
+.theme-purple .stat-icon {
+  background-color: #F3E5F5;
+  color: #8E24AA;
+}
+.theme-yellow .stat-icon {
+  background-color: #FFF9C4;
+  color: #FBC02D;
+}
+.theme-green .stat-icon {
+  background-color: #E8F5E9;
+  color: #43A047;
+}
+.theme-blue .stat-icon {
+  background-color: #E3F2FD;
+  color: #1E88E5;
+}
+.stat-title {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 4px;
+}
+.stat-count {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+/* 3. 최근 활동 & 메뉴 섹션 */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr; /* 왼쪽 목록을 좀 더 넓게 */
+  gap: 20px;
+}
+.section-box {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F1F1F1;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+.view-all {
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+}
+/* 최근 글 리스트 */
+.recent-list .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #F9F9F9;
+}
+.recent-list .item:last-child {
+  border-bottom: none;
+}
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.item-tag {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.tag-thanks {
+  background-color: #FFF9C4;
+  color: #F9A825;
+}
+.tag-reflect {
+  background-color: #E3F2FD;
+  color: #1565C0;
+}
+.item-title {
+  font-size: 14px;
+  color: #444;
+}
+.item-date {
+  font-size: 12px;
+  color: #bbb;
+}
+/* 우측 메뉴 리스트 */
+.menu-list {
+  padding: 0;
+  list-style: none;
+}
+.menu-list li {
+  padding: 14px 5px;
+  border-bottom: 1px solid #F9F9F9;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #555;
+  font-size: 14px;
+}
+.menu-list li span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-list li:hover {
+  color: #5D5FEF;
+  transform: translateX(3px);
+}
+.menu-list li:last-child {
+  border-bottom: none;
+}
+.menu-icon {
+  width: 16px;
+  height: 16px;
+  color: #ccc;
+}
+.menu-list li i:last-child {
+  width: 14px;
+  height: 14px;
+  color: #eee;
+}
+/* 로그아웃 텍스트 색상 */
+.menu-list li.logout span {
+  color: #E53935;
+}
+.menu-list li.logout:hover {
+  color: #D32F2F;
+}
+/* 반응형: 화면이 좁아지면 1단으로 변경 */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+}
+/* 기존 style 태그 안에 아래 코드를 추가하세요 */
+/* 마이페이지 전체 콘텐츠 강제 표시 */
+.mypage-content {
+  display: block !important; /* important는 우선순위를 강제로 높입니다 */
+  width: 100%;
+}
+/* 전체 컨테이너 및 공통 스타일 */
+.wf-container {
+  width: 100%;
+  color: #333;
+  font-family: "Pretendard", "Malgun Gothic", sans-serif; /* 세련된 폰트 적용 */
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* 섹션 간 간격 넓힘 */
+}
+/* 카드 형태의 기본 박스 스타일 */
+.wf-card {
+  background-color: #fff;
+  border-radius: 16px; /* 둥근 모서리 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
+  padding: 30px;
+  border: 1px solid #eee; /* 아주 연한 테두리 */
+}
+/* 1. 상단 프로필 및 통계 영역 (예쁜 디자인 적용) */
+.wf-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* 배경에 은은한 그라데이션 추가 */
+  background: linear-gradient(135deg, #fff 60%, #F0F7FF 100%);
+}
+.wf-user-info-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+/* 프로필 이미지 영역 (임시) */
+.wf-profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ddd;
+  background-image: url("https://via.placeholder.com/70"); /* 임시 이미지 */
+  background-size: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.wf-user-info h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wf-user-info .user-badge {
+  font-size: 0.8rem;
+  background-color: #E8F3FF;
+  color: #4A90E2;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.wf-user-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+/* 통계 버튼 -> 세련된 통계 카드 스타일로 변경 */
+.wf-stats-group {
+  display: flex;
+  gap: 15px;
+}
+.wf-stat-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px 25px;
+  text-align: center;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 100px;
+}
+.wf-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #4A90E2;
+}
+.wf-stat-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+.wf-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4A90E2; /* 포인트 컬러 */
+}
+/* 2. 탭 버튼 영역 (세련된 스타일) */
+.wf-tab-menu {
+  display: flex;
+  gap: 10px;
+  margin-bottom: -20px; /* 하단 박스와 겹치게 하여 자연스럽게 연결 */
+  padding-left: 20px;
+  z-index: 1; /* 하단 박스보다 위에 오도록 */
+}
+.wf-tab-btn {
+  background-color: #F9F9F9;
+  color: #666;
+  border: 1px solid #eee;
+  border-bottom: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 12px 12px 0 0; /* 위쪽만 둥글게 */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wf-tab-btn:hover {
+  background-color: #F0F0F0;
+  color: #4A90E2;
+}
+/* 활성화된 탭 스타일 */
+.wf-tab-btn.active {
+  background-color: #fff; /* 하단 박스와 동일한 배경색 */
+  color: #4A90E2;
+  border-color: #eee;
+  border-bottom: 1px solid #fff; /* 하단 테두리를 하얀색으로 막아 연결된 느낌 */
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.03);
+}
+.wf-tab-btn.active i {
+  color: #4A90E2;
+}
+/* 3. 하단 내용 영역 (세련된 카드 박스) */
+.wf-content-box {
+  /* wf-card 스타일 상속 */
+  padding-top: 40px; /* 탭 메뉴와 겹치는 부분 고려 */
+  min-height: 400px;
+}
+/* 탭 내용 숨김/표시 처리 및 애니메이션 */
+.wf-tab-content {
+  display: none;
+}
+.wf-tab-content.active {
+  display: block;
+  animation: slideUpFade 0.4s ease-in-out;
+}
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* [예시] 하단 콘텐츠 내부 스타일 (보여주신 코드 스타일 참고) */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #F0F0F0;
+}
+.content-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* 리스트 아이템 예시 스타일 */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.list-item:hover {
+  transform: translateX(5px);
+  border-color: #CCE4FF;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.1);
+}
+.list-item-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.list-item-date {
+  font-size: 0.85rem;
+  color: #999;
+}
+.list-item-tag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.tag-blue {
+  background-color: #E8F3FF;
+  color: #4A90E2;
+}
+.tag-green {
+  background-color: #EAFCF3;
+  color: #2ECC71;
+}
+
+/*내 정보 변경*/
+.user-edit-form {
+  max-width: 500px;
+  margin-top: 30px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;   /* 세로 중앙 */
+  margin-bottom: 18px;
+}
+
+
+.form-row label {
+  font-size: 0.9rem;
+   width: 120px; 
+  margin-bottom: 0;
+  color: #555;
+}
+
+.form-row input {
+  flex: 1;               /* 남은 공간 전부 사용 */
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
+}
+
+.form-row input:disabled {
+  background-color: #f3f3f3;
+  color: #999;
+}
+
+.form-actions {
+  text-align: center;   /* ⬅️ 중앙 정렬 */
+  margin-top: 30px;
+}
+
+
+.save-btn {
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.save-btn:hover {
+  background-color: #357ABD;
+}
+
+/* 내 정보 관리 폼만 중앙 정렬 */
+.user-edit-form {
+  width: 100%;
+  max-width: 420px;
+  margin: 30px auto 0; /* ← 핵심 */
+}
+
+
+/* 실제 폼 크기 조절 */
+.user-edit-form {
+  width: 100%;
+  max-width: 420px;   /* 폼 최대 너비 */
+}
+
+/* ID & 닉네임*/
+.inline-row {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  align-items: center;
+  
+}
+
+
+.check-btn {
+  padding: 0 14px;
+  border: 1px solid #ddd;
+  background: #4A90E2;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.check-btn:hover {
+  background: #357ABD;
+}
+
+small {
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
+/* 내정보 안내문구 색상*/
+small {
+  font-size: 0.8rem;
+}
+
+.error {
+  color: #e74c3c; /* 빨강 */
+}
+
+.success {
+  color: #2ecc71; /* 초록 */
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+  color: #888;
+  cursor: not-allowed;
+}
+
+
+.inline-row {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.form-row textarea {
+  flex: 1;
+  min-height: 1px;     /* ⬅️ 높이 증가 */
+  resize: vertical;      /* 사용자가 위아래 조절 가능 */
+  line-height: 1.5;
+}

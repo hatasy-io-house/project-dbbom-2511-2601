@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+        background-color: #f4f9fc;
+        padding: 40px;
+    }
+
+    /* ===== 컨테이너 ===== */
+    .board-container {
+        width: 900px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    /* ===== 헤더 ===== */
+    .board-header {
+        background-color: skyblue;
+        padding: 20px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .board-header h2 {
+        font-size: 22px;
+    }
+
+    .btn-write {
+        background-color: #ffffff;
+        color: skyblue;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-write:hover {
+        background-color: #eaf6fc;
+    }
+
+    /* ===== 검색 영역 ===== */
+    .search-area {
+        padding: 15px;
+        background-color: #f0f8ff;
+        display: flex;
+        gap: 8px;
+    }
+
+    .search-area select,
+    .search-area input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-search {
+        background-color: skyblue;
+        border: none;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* ===== 테이블 ===== */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #eaf6fc;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    tbody tr:hover {
+        background-color: #f9fdff;
+    }
+
+    td.title {
+        text-align: left;
+        cursor: pointer;
+        color: #007acc;
+    }
+
+    td.title:hover {
+        text-decoration: underline;
+    }
+
+    /* ===== 페이징 ===== */
+    .paging {
+        padding: 15px;
+        text-align: center;
+        background-color: #f0f8ff;
+    }
+
+    .paging a {
+        display: inline-block;
+        margin: 0 4px;
+        padding: 6px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .paging a.active {
+        background-color: skyblue;
+        color: #fff;
+        border-color: skyblue;
+    }
+
+    .paging a:hover {
+        background-color: #eaf6fc;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="board-container">
+
+    <!-- 헤더 -->
+    <div class="board-header">
+        <h2>게시판 목록</h2>
+        <button class="btn-write" onclick="goWrite()">글쓰기</button>
+    </div>
+
+    <!-- 검색 -->
+    <div class="search-area">
+        <select id="searchDiv">
+            <option value="">전체</option>
+            <option value="TITLE">제목</option>
+            <option value="REG_ID">작성자</option>
+        </select>
+        <input type="text" id="searchWord" placeholder="검색어">
+        <button class="btn-search" onclick="doSearch()">검색</button>
+    </div>
+
+    <!-- 목록 -->
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>구분</th>
+                <th>제목</th>
+                <th>조회수</th>
+                <th>작성자</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody id="boardBody">
+            <!-- AJAX로 데이터 바인딩 -->
+            <tr>
+                <td>10</td>
+                <td>공지</td>
+                <td class="title" onclick="goDetail(10)">게시판 테스트 제목</td>
+                <td>15</td>
+                <td>admin</td>
+                <td>2025-09-18</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징 -->
+    <div class="paging">
+        <a href="#">«</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">»</a>
+    </div>
+
+</div>
+
+<script>
+    function goWrite() {
+        location.href = "/ehr/board/board_reg.html";
+    }
+
+    function goDetail(seq) {
+        location.href = "/ehr/board/doSelectOne.do?seq=" + seq;
+    }
+
+    function doSearch() {
+        alert("검색 버튼 클릭");
+        // AJAX 검색 구현 예정
+    }
+</script>
+
+</body>
+</html>

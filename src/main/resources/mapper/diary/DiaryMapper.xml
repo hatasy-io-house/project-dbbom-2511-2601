@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.DiaryMapper">
+
+    <update id="updateViewCount" parameterType="DiaryVO">
+        UPDATE diary
+        SET diary_viewcount = diary_viewcount + 1
+        WHERE diary_sid = #{diarySid}
+    </update>
+
+    <update id="updateRecCount" parameterType="DiaryVO">
+        UPDATE diary
+        SET diary_reccount = diary_reccount + 1
+        WHERE diary_sid = #{diarySid}
+    </update>
+
+
+    <insert id="doSave" parameterType="DiaryVO">
+        <selectKey keyProperty="diarySid" order="BEFORE" resultType="int">
+            SELECT DIARY_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO DIARY
+       (DIARY_SID,
+        DIARY_TITLE,
+        DIARY_CONTENT,
+        DIARY_VIEWCOUNT,
+        DIARY_RECCOUNT,
+        DIARY_STATUS,
+        DIARY_CATEGORY,
+        DIARY_UPLOADDATE,
+        DIARY_UPDATE,
+        REG_ID
+       ) VALUES (
+        #{diarySid},
+        #{diaryTitle},
+        #{diaryContent},
+        0,
+        0,
+        #{diaryStatus},
+        #{diaryCategory},
+        sysdate,
+        sysdate,
+        #{regId}
+    )
+    </insert>
+
+    <delete id ="deleteAll">
+    DELETE FROM diary
+    </delete>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) FROM diary
+    </select>
+
+    <update id="doUpdate" parameterType="DiaryVO">
+        UPDATE diary
+        SET diary_title = #{diaryTitle},
+            diary_content = #{diaryContent},
+            diary_status = #{diaryStatus},
+            diary_category = #{diaryCategory}
+        WHERE diary_sid = #{diarySid}
+    </update>
+
+    <select id="doSelectOne" parameterType="DiaryVO" resultType="DiaryVO">
+        SELECT d.diary_sid       AS diarySid,
+               d.diary_title     AS diaryTitle,
+               d.diary_content   AS diaryContent,
+               d.diary_viewcount AS diaryViewcount,
+               d.diary_reccount  AS diaryReccount,
+               d.diary_status    AS diaryStatus,
+               d.diary_category  AS diaryCategory,
+               TO_CHAR(d.diary_uploaddate, 'YYYY-MM-DD HH24:MI:SS') AS diaryUploaddate,
+               d.reg_id          AS regId,
+               u.nickname        AS nickname
+        FROM diary d
+        JOIN users u ON d.reg_id = u.user_id
+        WHERE d.diary_sid = #{diarySid}
+    </select>
+
+    <insert id="saveAll">
+        INSERT INTO DIARY (
+            DIARY_SID,
+            DIARY_TITLE,
+            DIARY_CONTENT,
+            DIARY_VIEWCOUNT,
+            DIARY_RECCOUNT,
+            DIARY_STATUS,
+            DIARY_CATEGORY,
+            DIARY_UPLOADDATE,
+            REG_ID
+        )
+        SELECT
+            DIARY_SEQ.NEXTVAL AS diary_sid,
+            '제목' || LEVEL AS diary_title,
+            '내용' || LEVEL AS diary_content,
+            LEVEL AS diary_viewcount,
+            0 AS diary_reccount,
+            'Y' AS diary_status,
+            10 AS diary_category,
+            (SYSDATE - LEVEL) AS diary_uploaddate,
+            'user01' AS reg_id
+        FROM dual
+        CONNECT BY LEVEL <![CDATA[ <=  ]]> 1002
+    </insert>
+
+    <sql id="diaryWhere">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND diary_title LIKE '%' || #{searchWord} || '%'
+            </when>
+            <when test="'20' == searchDiv">
+                AND diary_content LIKE '%' || #{searchWord} || '%'
+            </when>
+            <when test="'30' == searchDiv">
+                AND (diary_title LIKE '%' || #{searchWord} || '%' OR diary_content LIKE '%' || #{searchWord} || '%')
+            </when>
+        </choose>
+    </sql>
+
+    
+
+    <select id="doRetrieve" parameterType="com.pcwk.ehr.cmn.DTO" resultType="DiaryVO">
+    SELECT A.*, B.*, u.nickname
+    FROM (
+        SELECT tt1.rnum AS no,
+               tt1.diary_sid,
+               tt1.diary_title,
+               tt1.diary_content,
+               tt1.diary_viewcount,
+               tt1.diary_reccount,
+               tt1.diary_status,
+               tt1.diary_category,
+               tt1.diary_uploaddate,
+               tt1.diary_update,
+               tt1.reg_id
+        FROM (
+            SELECT ROWNUM AS rnum, t1.*
+            FROM (
+                SELECT *
+                FROM diary
+                WHERE 1=1
+                <include refid="diaryWhere"></include>
+                ORDER BY diary_uploaddate DESC
+            ) t1
+            WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} * (#{pageNo} - 1) + #{pageSize})
+        ) tt1
+        WHERE tt1.rnum <![CDATA[ >= ]]> (#{pageSize} * (#{pageNo} - 1) + 1)
+    ) A
+    CROSS JOIN (
+        SELECT COUNT(*) total_cnt
+        FROM diary
+        WHERE 1=1
+        <include refid="diaryWhere"></include>
+    ) B
+    JOIN users u ON A.reg_id = u.user_id
+    </select>
+    
+    <select id="doPublicRetrieve" parameterType="com.pcwk.ehr.cmn.DTO" resultType="DiaryVO">
+    SELECT A.*, B.*, u.nickname
+    FROM (
+        SELECT tt1.rnum AS no,
+               tt1.diary_sid,
+               tt1.diary_title,
+               tt1.diary_content,
+               tt1.diary_viewcount,
+               tt1.diary_reccount,
+               tt1.diary_status,
+               tt1.diary_category,
+               tt1.diary_uploaddate,
+               tt1.diary_update,
+               tt1.reg_id
+        FROM (
+            SELECT ROWNUM AS rnum, t1.*
+            FROM (
+                SELECT *
+                FROM diary
+                WHERE diary_status = 'Y'
+                <include refid="diaryWhere"></include>
+                ORDER BY diary_uploaddate DESC
+            ) t1
+            WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} * (#{pageNo} - 1) + #{pageSize})
+        ) tt1
+        WHERE tt1.rnum <![CDATA[ >= ]]> (#{pageSize} * (#{pageNo} - 1) + 1)
+    ) A
+    CROSS JOIN (
+        SELECT COUNT(*) total_cnt
+        FROM diary
+        WHERE diary_status = 'Y'
+        <include refid="diaryWhere"></include>
+    ) B
+    JOIN users u ON A.reg_id = u.user_id
+    </select>
+    <delete id="doDelete" parameterType="DiaryVO">
+        DELETE FROM diary
+        WHERE diary_sid = #{diarySid}
+    </delete>
+
+    <select id="getBest3" resultType="DiaryVO">
+        SELECT d.*, u.nickname
+        FROM DIARY d
+        JOIN USERS u ON d.reg_id = u.user_id
+        ORDER BY d.diary_reccount DESC, d.diary_uploaddate DESC
+        FETCH FIRST 3 ROWS ONLY
+    </select>
+
+    <select id="getDiaryCount" parameterType="com.pcwk.ehr.diary.domain.DiaryVO" resultType="int">
+		    SELECT COUNT(*) 
+		    FROM diary 
+		    WHERE reg_id = #{regId}
+		</select>
+		
+		<select id="getMonthDiaryCount" parameterType="com.pcwk.ehr.diary.domain.DiaryVO" resultType="int">
+		    SELECT COUNT(*) 
+		    FROM diary 
+		    WHERE reg_id = #{regId} 
+		    AND TO_CHAR(diary_uploaddate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+		</select>
+	   
+	   
+		<select id="getUserTotalCount"
+			parameterType="com.pcwk.ehr.diary.domain.DiaryVO" resultType="int">
+			SELECT COUNT(*)
+			FROM diary
+			WHERE reg_id = #{regId}
+		</select>
+	
+		<select id="getUserMonthCount"
+			parameterType="com.pcwk.ehr.diary.domain.DiaryVO" resultType="int">
+			SELECT COUNT(*)
+			FROM diary
+			WHERE reg_id = #{regId}
+			AND TO_CHAR(diary_uploaddate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+		</select>
+	     
+	
+		<select id="selectMonthDiary"
+			parameterType="com.pcwk.ehr.diary.domain.DiaryVO"
+			resultType="com.pcwk.ehr.diary.domain.DiaryVO">
+			SELECT
+			diary_sid,
+			diary_title,
+			diary_content,
+			diary_category,
+			TO_CHAR(diary_uploaddate, 'YYYY-MM-DD') as diary_uploaddate
+			FROM diary
+			WHERE reg_id = #{regId}
+			AND TO_CHAR(diary_uploaddate, 'YYYY-MM') = #{diaryUploadDate}
+			ORDER BY diary_uploaddate ASC
+		</select>
+    
+
+    
+
+</mapper>

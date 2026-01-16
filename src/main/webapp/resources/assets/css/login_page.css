@@ -1,0 +1,246 @@
+:root {
+    --primary-blue: #3b82f6; /* 로그인 및 선택 박스 */
+    --primary-hover: #2563eb; /* 로그인 hover */
+    --gradient-start: #eff6ff; /* blue-50 */
+    --gradient-mid: #eef2ff;   /* indigo-50 */
+    --gradient-end: #faf5ff;   /* purple-50 */
+    --text-main: #1f2937;      /* gray-800 */
+    --text-sub: #4b5563;       /* gray-600 */
+    --border-color: #dbeafe;   /* blue-100 */
+    --white-alpha: rgba(255, 255, 255, 0.8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+}
+
+body {
+  background-color: #fafaff;
+}
+
+.login_container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* 왼쪽 섹션 */
+.info_left {
+  flex: 1;
+  background: linear-gradient(135deg, #e3f2fd 0%, #fafaff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.brand_info h1 {
+  font-size: 3rem;
+  color: #1e40af;
+  margin-bottom: 20px;
+}
+
+.brand_info p {
+  font-size: 1.2rem;
+  color: #777;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.back_to_home a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.back_to_home a:hover {
+  color: #5c7cfa;
+}
+
+/* 오른쪽 섹션 */
+.login_right {
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_box {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+}
+
+.login_box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.input_field {
+  margin-bottom: 20px;
+}
+.input_field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.input_field input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+}
+
+.submit_btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+
+  /* hover를 위한 부드러운 전환 */
+  transition: background 0.3s ease;
+}
+
+/* 로그인 버튼 hover 효과 */
+.submit_btn:hover {
+  background: linear-gradient(to right, #1d4ed8, #4338ca);
+}
+
+
+
+/* 소셜 버튼 스타일 */
+.divider {
+  margin: 30px 0;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  line-height: 0.1em;
+}
+.divider span {
+  background: #fff;
+  padding: 0 10px;
+  color: #bbb;
+  font-size: 0.8rem;
+}
+
+/* 소셜 로그인 버튼 공통 스타일 */
+.social_btns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* 버튼 사이 간격 */
+    margin-top: 20px;
+}
+
+.s_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;       /* 부모 너비에 맞춤 */
+    height: 50px;      /* 표준 높이 */
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    position: relative;
+}
+
+.s_btn:hover {
+    opacity: 0.9;
+}
+
+/* 아이콘 공통 스타일 */
+.icon {
+    position: absolute;
+    left: 14px; /* 아이콘을 왼쪽에 고정 */
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 1. 카카오 스타일 */
+.s_btn.kakao {
+    background-color: #FEE500;
+    color: #000000;
+}
+.kakao-icon {
+    /* 카카오 말풍선 아이콘 (임시) */
+    background: url('https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png') no-repeat center/contain;
+}
+
+/* 2. 네이버 스타일 (요청하신 디자인) */
+.s_btn.naver {
+    background-color: #03C75A;
+    color: #ffffff;
+}
+.naver-icon {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: sans-serif;
+}
+
+/* 3. 구글 스타일 */
+.s_btn.google {
+    background-color: #ffffff;
+    color: #1f1f1f;
+    border: 1px solid #dcdcdc; /* 구글은 보통 테두리가 있음 */
+}
+.google-icon img {
+    width: 18px;
+    height: 18px;
+}
+
+.login_footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+}
+.login_footer a {
+  color: #5c7cfa;
+  text-decoration: none;
+}
+.login_footer .dot {
+  margin: 0;
+  color: #eee;
+}
+
+@media (max-width: 768px) {
+  .login_container {
+    flex-direction: column; /* 좌우 → 위아래로 변경 */
+  }
+
+  .info_left, .login_right {
+    padding: 20px; /* 좌우 여백 줄이기 */
+  }
+
+  .brand_info h1 {
+    font-size: 2.2rem; /* 글자 크기 조정 */
+  }
+
+  .brand_info p {
+    font-size: 1rem;
+  }
+
+  .login_box {
+    padding: 20px; /* 로그인 박스 여백 줄이기 */
+  }
+}
+
