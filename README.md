@@ -29,4 +29,4 @@
 ---
 
 ## 🛠 Tech Stack
-$\color{gray}{\text{Java | Spring Boot | MySQL | JavaScript | HTML5 | CSS3}}$
+$\color{gray}{\text{Java | Spring Boot | Oracle DB | JavaScript | HTML5 | CSS3 | JQuery}}$
