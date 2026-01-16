@@ -5,21 +5,28 @@
 
 | Name | Role | Responsibilities |
 | :--- | :--- | :--- |
-| Jun-yeop Kim | Project Manager | Overall file integration |
-| Min-su Kim | Team Leader | DB design |
-| Yu-bin Sim | Lead UI/UX Designer | Web design orchestration |
-
-```diff
-+ Dong-han Kim | UI/UX Developer | Notice board & Admin page (Back-end)
+| Jun-yeop Kim | Project Manager (PM) | • Overall file integration & modification<br>• Database design & implementation<br>• Main page & Diary (Back-end) |
+| Min-su Kim | Team Leader | • DB design & Requirements definition<br>• Comments & User session (Back-end)<br>• Project Presentation |
+| Yu-bin Sim | Lead UI/UX Designer | • Web design orchestration<br>• Landing, Intro, & Auth pages (Web)<br>• My Page & Quotes storage (Back-end) |
+| $\color{royalblue}{\text{Dong-han Kim}}$ | $\color{royalblue}{\text{UI/UX Developer}}$ | • Main, Login, & Report pages (Web)<br>• Notice board & Daily reflection (Front-end)<br>• $\color{royalblue}{\text{Notice board & Admin page (Back-end)}}$ |
 
 ---
 
-## 🚀 Key Features (Dong-han Kim)
+## 🚀 Key Features (Main Contributions)
 
-### 📢 Notice Board (Back-end)
-* 관리자가 사용자들에게 중요한 소식을 전할 수 있는 **공지사항 시스템**을 구축했습니다.
-* CRUD(생성, 조회, 수정, 삭제) 기능을 통해 효율적인 정보 전달이 가능합니다.
+### $\color{orange}{\text{📢 Notice Board & Admin System}}$
+> **Developed by: Dong-han Kim**
 
-### ⚙️ Admin Dashboard
-* 서비스 전반을 관리할 수 있는 **관리자 전용 페이지**의 백엔드 로직을 담당했습니다.
-* 사용자 현황 및 게시글 관리를 통해 서비스 운영의 안정성을 높였습니다.
+* **공지사항 시스템 (Back-end):** 관리자가 사용자들에게 중요한 소식을 전할 수 있는 기능을 구축했습니다. CRUD 로직을 직접 구현하여 데이터 관리의 효율성을 높였습니다.
+* **관리자 대시보드 (Back-end):** 서비스 운영에 필수적인 관리자 전용 페이지의 서버 로직을 담당하여, 전체적인 서비스 컨트롤 타워 역할을 구현했습니다.
+
+### $\color{skyblue}{\text{🎨 UI/UX Development}}$
+> **Developed by: Dong-han Kim**
+
+* **주요 페이지 구현:** 메인 페이지, 로그인, 리포트 페이지의 사용자 경험(UX)을 고려한 프론트엔드 개발을 진행했습니다.
+* **사용자 피드백 반영:** '오늘의 한마디' 및 공지사항 게시판의 레이아웃을 설계하여 가독성을 높였습니다.
+
+---
+
+## 🛠 Tech Stack
+$\color{gray}{\text{Java | Spring Boot | Oracle DB | JavaScript | HTML5 | CSS3 | JQuery}}$
