@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.NoticeMapper">
+
+<sql id="searchCondition">
+    <if test="searchWord != null and searchWord != ''">
+        <choose>
+            <when test="searchDiv == '10'">
+                AND TT1.NOTICE_TITLE LIKE '%' || #{searchWord} || '%'
+            </when>
+            <when test="searchDiv == '20'">
+                AND TT1.NOTICE_CONTENT LIKE '%' || #{searchWord} || '%'
+            </when>
+            <when test="searchDiv == '30'">
+                AND (TT1.NOTICE_TITLE LIKE '%' || #{searchWord} || '%' 
+                     OR TT1.NOTICE_CONTENT LIKE '%' || #{searchWord} || '%')
+            </when>
+            <otherwise>
+                AND (TT1.NOTICE_TITLE LIKE '%' || #{searchWord} || '%' 
+                     OR TT1.NOTICE_CONTENT LIKE '%' || #{searchWord} || '%')
+            </otherwise>
+        </choose>
+    </if>
+</sql>
+
+		<select id="doRetrieve" parameterType="com.pcwk.ehr.notice.domain.NoticeVO" resultMap="noticeMap">
+		    SELECT A.*, B.*
+		    FROM (
+		        SELECT 
+		            TT1.NOTICE_SID,
+		            TT1.NOTICE_TITLE,
+		            TT1.NOTICE_CONTENT,
+		            TO_CHAR(TT1.NOTICE_UPDATE, 'YYYY-MM-DD HH24:MI:SS') AS NOTICE_UPDATE,
+		            TO_CHAR(TT1.NOTICE_TIME,   'YYYY-MM-DD HH24:MI:SS') AS NOTICE_TIME,
+		            U.NICKNAME AS REG_ID, 
+		            COUNT(*) OVER() AS TOTAL_CNT,
+		            ROW_NUMBER() OVER(ORDER BY TT1.NOTICE_SID DESC) AS RNUM
+		        FROM NOTICE TT1
+		        JOIN USERS U ON TT1.REG_ID = U.USER_ID 
+		        WHERE 1=1
+		        <include refid="searchCondition"/>
+		    ) A CROSS JOIN (SELECT 'x' FROM DUAL) B 
+		    WHERE RNUM BETWEEN (#{pageSize} * (#{pageNo} - 1) + 1) AND (#{pageSize} * #{pageNo})
+		</select>
+
+  <resultMap type="com.pcwk.ehr.notice.domain.NoticeVO" id="noticeMap">
+    <id     column="NOTICE_SID"      property="noticeSid"/>
+    <result column="NOTICE_TITLE"    property="noticeTitle"/>
+    <result column="NOTICE_CONTENT"  property="noticeContent"/>
+    <result column="NOTICE_UPDATE"   property="noticeUpdate"/>
+    <result column="NOTICE_TIME"     property="noticeTime"/>
+    <result column="REG_ID"          property="regId"/>
+  </resultMap>
+
+  <insert id="doSave" parameterType="com.pcwk.ehr.notice.domain.NoticeVO">
+    <selectKey keyProperty="noticeSid" resultType="int" order="BEFORE">
+        SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO NOTICE (
+        NOTICE_SID,
+        NOTICE_TITLE,
+        NOTICE_CONTENT,
+        NOTICE_UPDATE,
+        NOTICE_TIME,
+        REG_ID
+    ) VALUES (
+        #{noticeSid}, #{noticeTitle},
+        #{noticeContent},
+        SYSDATE, SYSDATE, #{regId}
+    )
+  </insert>
+
+		<select id="doSelectOne" parameterType="com.pcwk.ehr.notice.domain.NoticeVO" resultType="com.pcwk.ehr.notice.domain.NoticeVO">
+		    SELECT 
+		        T1.NOTICE_SID,
+		        T1.NOTICE_TITLE,
+		        T1.NOTICE_CONTENT,
+		        TO_CHAR(T1.NOTICE_UPDATE, 'YYYY-MM-DD HH24:MI:SS') AS NOTICE_UPDATE,
+		        TO_CHAR(T1.NOTICE_TIME,   'YYYY-MM-DD HH24:MI:SS') AS NOTICE_TIME,
+		        U.NICKNAME AS REG_ID 
+		    FROM NOTICE T1
+		    JOIN USERS U ON T1.REG_ID = U.USER_ID
+		    WHERE T1.NOTICE_SID = #{noticeSid}
+		</select>
+
+  <update id="doUpdate" parameterType="com.pcwk.ehr.notice.domain.NoticeVO">
+    UPDATE NOTICE
+    SET NOTICE_TITLE   = #{noticeTitle},
+        NOTICE_CONTENT = #{noticeContent},
+        NOTICE_UPDATE  = SYSDATE,
+    WHERE NOTICE_SID   = #{noticeSid}
+  </update>
+
+  <delete id="doDelete" parameterType="com.pcwk.ehr.notice.domain.NoticeVO">
+    DELETE FROM NOTICE
+    WHERE NOTICE_SID = #{noticeSid}
+  </delete>
+
+  <select id="getAll" resultType="com.pcwk.ehr.notice.domain.NoticeVO">
+    SELECT NOTICE_SID, NOTICE_TITLE, NOTICE_CONTENT, REG_ID FROM NOTICE ORDER BY NOTICE_SID DESC
+  </select>
+
+  <select id="getCount" resultType="int">
+    SELECT COUNT(*) FROM NOTICE
+  </select>
+  
+  <delete id="deleteAll">
+    DELETE FROM NOTICE
+  </delete>
+
+</mapper>
