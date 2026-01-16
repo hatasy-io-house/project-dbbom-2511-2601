@@ -5,10 +5,10 @@
 
 | Name | Role | Responsibilities |
 | :--- | :--- | :--- |
-| **Jun-yeop Kim** | **Project Manager (PM)** | • Overall file integration & modification<br>• Database design & implementation<br>• Main page & Diary (Back-end) |
-| **Min-su Kim** | **Team Leader** | • DB design & Requirements definition<br>• Comments & User session (Back-end)<br>• Project Presentation |
-| **Yu-bin Sim** | **Lead UI/UX Designer** | • Web design orchestration<br>• Landing, Intro, & Auth pages (Web)<br>• My Page & Quotes storage (Back-end) |
-| **Dong-han Kim** | **UI/UX Developer** | • Main, Login, & Report pages (Web)<br>• Notice board & Daily reflection (Front-end)<br>• **Notice board & Admin page (Back-end)** |
+| Jun-yeop Kim | Project Manager (PM) | • Overall file integration & modification<br>• Database design & implementation<br>• Main page & Diary (Back-end) |
+| Min-su Kim | Team Leader | • DB design & Requirements definition<br>• Comments & User session (Back-end) |
+| Yu-bin Sim | Lead UI/UX Designer | • Web design orchestration<br>• Landing, Intro, & Auth pages (Web) |
+| <kbd>**Dong-han Kim**</kbd> | <kbd>**UI/UX Developer**</kbd> | <kbd>**• Main, Login, & Report pages (Web)**</kbd><br><kbd>**• Notice board & Admin page (Back-end)**</kbd> |
 
 ---
 
