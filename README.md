@@ -1,27 +1,23 @@
-Acorn Academy Project
-Group name : Team DBBOM
-Contributor :
-Jun-yeop Kim	Project Manager (PM)
-• Overall file integration & modification
-• Database design & implementation
-• Requirements definition
-• Main page & Diary (Back-end)
-• Report system (Back-end)
+# Project DBBOM 🌸
+> **Traces of the Inner Self**
 
-Min-su Kim	Team Leader	
-• Database design & implementation
-• Requirements definition
-• Comments & User session management (Back-end)
-• My Page (Back-end)
-• Project Presentation
+## 👥 Contributors (Team DBBOM)
 
-Yu-bin Sim	Lead UI/UX Designer	
-• Web design orchestration
-• UI/UX for Landing, Intro, & Auth pages
-• Diary creation & Quotes collection (Front-end)
-• My Page & Quotes storage (Back-end)
-Dong-han Kim	UI/UX Assistant	
+| Name | Role | Responsibilities |
+| :--- | :--- | :--- |
+| **Jun-yeop Kim** | **Project Manager (PM)** | • Overall file integration & modification<br>• Database design & implementation<br>• Main page & Diary (Back-end) |
+| **Min-su Kim** | **Team Leader** | • DB design & Requirements definition<br>• Comments & User session (Back-end)<br>• Project Presentation |
+| **Yu-bin Sim** | **Lead UI/UX Designer** | • Web design orchestration<br>• Landing, Intro, & Auth pages (Web)<br>• My Page & Quotes storage (Back-end) |
+| **Dong-han Kim** | **UI/UX Developer** | • Main, Login, & Report pages (Web)<br>• Notice board & Daily reflection (Front-end)<br>• **Notice board & Admin page (Back-end)** |
 
-• UI/UX for Main, Login, & Report pages
-• Notice board & Daily reflection pages (Front-end)
-• Notice board & Admin page (Back-end)
+---
+
+## 🚀 Key Features (Dong-han Kim)
+
+### 📢 Notice Board (Back-end)
+* 관리자가 사용자들에게 중요한 소식을 전할 수 있는 **공지사항 시스템**을 구축했습니다.
+* CRUD(생성, 조회, 수정, 삭제) 기능을 통해 효율적인 정보 전달이 가능합니다.
+
+### ⚙️ Admin Dashboard
+* 서비스 전반을 관리할 수 있는 **관리자 전용 페이지**의 백엔드 로직을 담당했습니다.
+* 사용자 현황 및 게시글 관리를 통해 서비스 운영의 안정성을 높였습니다.
